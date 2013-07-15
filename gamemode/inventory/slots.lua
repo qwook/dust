@@ -5,14 +5,24 @@ function PANEL:Init()
 
 	self.Panel = vgui.Create( "DPanel", self )
 
+	local slots = {}
+	
+	for i = 0, 6 do
+		local slot = vgui.Create( "Slot", self.Panel )
+		
+		slot:SetPos(5 + (i % 6)*69, 5 + math.floor(i / 6)*69)
+		
+		table.insert( slots, slot )
+	end
+	
 end
 
 function PANEL:PerformLayout()
 
-	self:SetSize( 50 * 6 + 10, 60 )
-	self:SetPos( (ScrW() - 50 * 6 - 10) / 2, ScrH() - 70 )
+	self:SetSize( 69 * 6 + 5, 74 )
+	self:SetPos( (ScrW() - 69 * 6 - 5) / 2, ScrH() - 84 )
 	
-	self.Panel:StretchToParent()
+	self.Panel:SetSize( self:GetSize() )
 
 end
 

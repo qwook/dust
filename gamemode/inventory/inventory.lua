@@ -44,23 +44,16 @@ function PANEL:Init()
 	
 	local slots = {}
 	
-	for i = 0, 10 do
+	for i = 0, 35 do
 		local slot = vgui.Create( "Slot", self.Panel )
+		
+		slot:SetPos(5 + (i % 6)*69, 5 + math.floor(i / 6)*69)
+		
 		table.insert( slots, slot )
 	end
 	
-	Draggable = vgui.Create( "DButton", slot )
-	Draggable:SetPos( 0, 0 )
-	Draggable:SetSize( 40, 40 )
-	Draggable.OnMousePressed = function( self, key )
-		if key == MOUSE_LEFT then
-			self.oldSlot = self:GetParent()
-			DragX, DragY = self:CursorPos()
-			Draggable:SetDrawOnTop( true )
-			Dragging = true
-		end
-	end
-	
+	vgui.Create( "Item", slots[1] )
+	vgui.Create( "Item", slots[2] ):SetText("Hi!")
 
 end
 
@@ -78,6 +71,10 @@ function ReleaseDrag( )
 	--Draggable:SetPos( math.floor((x + 20) / 50)*50 + 10, math.floor((y + 20) / 50)*50 + 10 )
 	
 	if DragPanel then
+		local item = DragPanel:GetItem()
+		if item then
+			item:SetParent( Draggable.oldSlot )
+		end
 		Draggable:SetPos( 0, 0 )
 		Draggable:SetParent( DragPanel )
 	else
@@ -92,6 +89,7 @@ function MoveDraggable()
 	if Dragging then
 
 		local mx, my = gui.MousePos()
+		Draggable:MoveToBack()
 		Draggable:SetParent()
 		Draggable:SetPos( mx - DragX, my - DragY )
 		
@@ -193,12 +191,11 @@ end
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	self:SetSize( ScrW(), ScrH() )
-	self:SetPos( 0, 0 )
-	
-	self.Panel:SetSize(50 * 6 + 10, 50 * 6 + 10)
-	self.Panel:Center()
+	self:SetSize(69 * 6 + 5, 69 * 5 + 5)
+	self:Center()
 
+	self.Panel:SetSize( self:GetSize() )
+	
 	--[[local MarginX = math.Clamp( (ScrW() - 1024) * spawnmenu_border:GetFloat(), 25, 256 )
 	local MarginY = math.Clamp( (ScrH() - 768) * spawnmenu_border:GetFloat(), 25, 256 )
 
