@@ -64,22 +64,19 @@ DragY = 0
 function ReleaseDrag( )
 	
 	Dragging = false
-	Draggable:SetDrawOnTop( false )
 	
 	--local mx, my = gui.MousePos()
 	--local x, y = g_SpawnMenu.Panel:ScreenToLocal( mx - DragX, my - DragY )
 	--Draggable:SetPos( math.floor((x + 20) / 50)*50 + 10, math.floor((y + 20) / 50)*50 + 10 )
 	
-	if DragPanel then
+	if DragPanel and DragPanel.GetItem then
 		local item = DragPanel:GetItem()
 		if item then
-			item:SetParent( Draggable.oldSlot )
+			item:MoveInto( Draggable.oldSlot )
 		end
-		Draggable:SetPos( 0, 0 )
-		Draggable:SetParent( DragPanel )
+		Draggable:MoveInto( DragPanel )
 	else
-		Draggable:SetPos( 0, 0 )
-		Draggable:SetParent( Draggable.oldSlot )
+		Draggable:MoveInto( Draggable.oldSlot )
 	end
 	
 end

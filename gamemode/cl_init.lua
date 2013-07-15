@@ -13,6 +13,7 @@ include( 'cl_notice.lua' )
 include( 'cl_hints.lua' )
 include( 'cl_worldtips.lua' )
 include( 'cl_search_models.lua' )
+include( 'cl_inventorymanager.lua' )
 include( 'gui/IconEditor.lua' )
 
 --

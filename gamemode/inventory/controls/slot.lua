@@ -6,9 +6,12 @@ local PANEL = {}
 -----------------------------------------------------------]]
 function PANEL:Init()
 
+	self.GoalParent = nil
+
 end
 
 function PANEL:Think()
+
 	if self:IsHovered() then
 		DragPanel = self
 	else
@@ -16,6 +19,7 @@ function PANEL:Think()
 			DragPanel = nil
 		end
 	end
+	
 end
 
 function PANEL:Paint()

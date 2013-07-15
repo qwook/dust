@@ -14,6 +14,7 @@ AddCSLuaFile( "cl_notice.lua" )
 AddCSLuaFile( "cl_search_models.lua" )
 AddCSLuaFile( "cl_spawnmenu.lua" )
 AddCSLuaFile( "cl_worldtips.lua" )
+AddCSLuaFile( "cl_inventorymanager.lua" )
 AddCSLuaFile( "persistence.lua" )
 AddCSLuaFile( "player_extension.lua" )
 AddCSLuaFile( "save_load.lua" )
@@ -25,6 +26,7 @@ include( 'commands.lua' )
 include( 'player.lua' )
 include( 'spawnmenu/init.lua' )
 include( 'inventory/init.lua' )
+include( 'inventorymanager.lua' )
 
 --
 -- Make BaseClass available

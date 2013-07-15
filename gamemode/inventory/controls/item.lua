@@ -6,6 +6,8 @@ local PANEL = {}
 -----------------------------------------------------------]]
 function PANEL:Init()
 	self:SetText( "N/A (1)" )
+	self._x = 0
+	self._y = 0
 end
 
 function PANEL:Paint()
@@ -29,6 +31,7 @@ function PANEL:OnMousePressed(key)
 end
 
 function PANEL:Think()
+
 	if self:IsHovered() then
 		DragPanel = self:GetParent()
 	else
@@ -36,6 +39,36 @@ function PANEL:Think()
 			DragPanel = nil
 		end
 	end
+	
+	if self.GoalParent then
+		if self._x == self.GoalX and self._y == self.GoalY then
+			self:SetDrawOnTop( false )
+			self:SetParent( self.GoalParent )
+			self:SetPos(0, 0)
+			self.GoalParent = nil
+		else
+			local n = Vector(self.GoalX, self.GoalY, 0) - Vector(self._x, self._y, 0)
+			local d = n:Distance(Vector(0,0,0))
+			n = n:GetNormal()
+		
+			self._x = math.Approach(self._x, self.GoalX, n.x * FrameTime() * (d + 1)*20)
+			self._y = math.Approach(self._y, self.GoalY, n.y * FrameTime() * (d + 1)*20)
+			self:SetPos(self._x, self._y)
+		end
+	end
+	
+end
+
+function PANEL:MoveInto( slot )
+	
+	self._x, self._y = self:LocalToScreen(0, 0)
+	self:SetPos( self._x, self._y )
+	self:SetParent()
+	self:SetDrawOnTop( true )
+	
+	self.GoalParent = slot
+	self.GoalX, self.GoalY = self.GoalParent:LocalToScreen(0, 0)
+	
 end
 
 --[[---------------------------------------------------------
